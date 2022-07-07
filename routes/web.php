@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 
@@ -29,7 +27,5 @@ Route::group(['middleware' => 'web'], function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::resource('transaction', TransactionController::class);
     Route::resource('user', UserController::class)->middleware('admin');
-    Route::resource('product', ProductController::class);
     Route::resource('category', CategoryController::class)->middleware("admin");
-    Route::resource('report', ReportController::class)->only("index");
 });
