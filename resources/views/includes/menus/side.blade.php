@@ -12,24 +12,17 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('transaction.index') }}"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('departments.index') }}"
                         aria-expanded="false">
                         <i class="mdi mdi-cash"></i>
-                        <span class="hide-menu">Transactions</span>
+                        <span class="hide-menu">Departments</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('product.index') }}"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.index') }}"
                         aria-expanded="false">
                         <i class="mdi mdi-format-paint"></i>
-                        <span class="hide-menu">Products</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('report.index') }}"
-                        aria-expanded="false">
-                        <i class="mdi mdi-cash"></i>
-                        <span class="hide-menu">Report</span>
+                        <span class="hide-menu">Employees</span>
                     </a>
                 </li>
                 

@@ -31,28 +31,6 @@ class HomeController extends Controller
 
 
     function dashboard(Request $request){
-        $recentProducts = Product::query()
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-
-        $recentTransactions = Transaction::query()
-            ->orderBy('created_at', 'desc')
-            ->latest()
-            ->limit(15)
-            ->get();
-
-        // counts
-        $productCounts = Product::query()->count();
-        $transactionCounts = Transaction::query()->count();
-        $categories = Category::query()->count();
-
-        return view('admin.dashboard', compact(
-            "recentProducts", 
-            "recentTransactions",
-            "productCounts",
-            "transactionCounts",
-            "categories"
-        ));
+        return view('admin.dashboard');
     }
 }
