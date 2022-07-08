@@ -115,6 +115,7 @@ class EmployeeController extends Controller
         //get employee
         $employee = Employee::findOrFail($id);
 
+        //if has document files
         if ($request->hasFile('document_file')) {
             $document = $employee->addDocumentFromRequest($request, [
                 'name' => $request->file('document_file')->getClientOriginalName(),
@@ -211,6 +212,11 @@ class EmployeeController extends Controller
         if ($employee->profile_picture) {
             Storage::delete('public/' . $employee->profile_picture);
         }
+
+        //unlink all employee documents from the public storage
+        $employee->documents->each(function ($document) {
+            Storage::delete('public/' . $document->path);
+        });
 
         //redirect to index
         return redirect()->route('employees.index');
