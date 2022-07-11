@@ -12,19 +12,20 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('departments.index') }}"
-                        aria-expanded="false">
-                        <i class="mdi mdi-cash"></i>
-                        <span class="hide-menu">Departments</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.index') }}"
                         aria-expanded="false">
                         <i class="mdi mdi-format-paint"></i>
                         <span class="hide-menu">Employees</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('departments.index') }}"
+                        aria-expanded="false">
+                        <i class="mdi mdi-cash"></i>
+                        <span class="hide-menu">Departments</span>
+                    </a>
+                </li>
+               
                 
                 @if(Auth::user()->type == "administrator")
                     <li class="sidebar-item">

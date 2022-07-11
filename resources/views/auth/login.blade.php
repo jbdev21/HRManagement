@@ -7,10 +7,9 @@
 
             <div class="card-body bg-white p-5">
                 <div class="mb-4 text-center">
-                    <b class="logo-icon">
-                        <img src="{{ asset('assets/images/logo/paintLogo.png') }}" alt="homepage" width="50" class="light-logo" />
-                    </b>
-                    <img src="{{ asset('assets/images/logo/titleLogo.png') }}" class=" mw-100" alt="homepage" />
+                    <h1>
+                        {{ config("app.name") }}
+                    </h1>
                 </div>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf

@@ -21,19 +21,6 @@
                             </span>
                         </span>
                     </div>
-            </div>
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item" style="margin-left: 14px;">
-                            <b class="logo-icon">
-                                <img src="{{ asset('assets/images/logo/paintLogo.png') }}" alt="homepage" width="50" class="light-logo" />
-                            </b>
-                            <span class="logo-text" style="margin-left: 14px;">
-                                <img src="{{ asset('assets/images/logo/titleLogo.png') }}" class="light-logo" alt="homepage" />
-                            </span>
-                        </li>
-                    </ul>
-                    
                 </div>
             </nav>
         </header>

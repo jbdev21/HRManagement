@@ -9,24 +9,24 @@
         <div class="col-4">
             <div class="card bg-warning text-white">
                 <div class="card-body">
-                    <h1>1</h1>
-                    <h4>Transactions</h4>
+                    <h1>{{ $employees }}</h1>
+                    <h4>Employees</h4>
                 </div>
             </div>
         </div>
         <div class="col-4">
             <div class="card bg-success text-white">
                 <div class="card-body">
-                    <h1>1</h1>
-                    <h4>Products</h4>
+                    <h1>{{ $documents }}</h1>
+                    <h4>Documents Uploaded</h4>
                 </div>
             </div>
         </div>
         <div class="col-4">
             <div class="card bg-info text-white">
                 <div class="card-body">
-                    <h1>1</h1>
-                    <h4>Categories</h4>
+                    <h1>{{ $users }}</h1>
+                    <h4>Users</h4>
                 </div>
             </div>
         </div>

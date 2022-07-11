@@ -16,7 +16,9 @@
                         </div>
                         <div class="form-group">
                             <label for="">Type</label>
-                            <input type="text" name="type" placeholder=" category type.." required class="form-control">
+                            <select name="type" id="" class="form-control">
+                                <option value="document">Document</option>
+                            </select>
                         </div>
                         <button class="btn btn-lg btn-primary">Submit</button>
                     </form>

@@ -71,23 +71,18 @@ class EmployeeController extends Controller
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
-            $employee->profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $employee->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
         }
 
         $employee->save();
 
         //if has document
         if ($request->hasFile('document_file')) {
-            $document = $employee->addDocumentFromRequest($request, [
+            $employee->addDocumentFromRequest($request, [
                 'file_name' => $request->file('document_file')->getClientOriginalName(),
                 'type' => $request->document_type,
             ]);
 
-            // $employee->documents()->create([
-            //     'filename' => $request->file('document_file')->getClientOriginalName(),
-            //     'type' => $request->file('document_file')->getMimeType(),
-            //     'path' => $request->file('document_file')->store('documents', 'public'),
-            // ]);
 
         }
         
@@ -102,13 +97,23 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show(Request $request, Employee $employee)
     {
-        //get category where type document
-        $documents = Category::where('type', 'document')->get();
-
-        return view('admin.employees.show', compact('employee', 'documents'));
+        if($request->tab == "document"){
+            $documents = $employee->documents()->paginate(25);
+            $documentCategories = Category::where('type', 'document')->get();
+            return view("admin.employees.show.document", compact('employee',    'documents', 'documentCategories'));
+        }else if($request->tab == "work-experience"){
+            $experiences = $employee->workExperiences()->paginate(25);
+            $documentCategories = Category::where('type', 'document')->get();
+            return view("admin.employees.show.work-experience", compact('experiences', 'employee', 'documentCategories'));
+        }else{
+            return view('admin.employees.show.index', compact('employee'));
+        }
+    
     }
+
+    
 
     public function addDocument($id, Request $request)
     {
@@ -117,14 +122,14 @@ class EmployeeController extends Controller
 
         //if has document files
         if ($request->hasFile('document_file')) {
-            $document = $employee->addDocumentFromRequest($request, [
+            $employee->addDocumentFromRequest($request, [
                 'name' => $request->file('document_file')->getClientOriginalName(),
                 'category_id' => $request->category_id,
             ]);
         }
 
         //redirect to index
-        return back();
+        return redirect()->route('employees.show', [$id, 'tab' => 'document']);
     }
 
     //employee delere document
@@ -152,7 +157,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         //return view
-        return view('employees.edit', compact('employee'));
+        return view('admin.employee.edit', compact('employee'));
     }
 
     /**
@@ -177,21 +182,10 @@ class EmployeeController extends Controller
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
-            $employee->profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $employee->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
         }
 
         $employee->save();
-
-        //if has document
-        if ($request->hasFile('document_file')) {
-
-            $employee->documents()->create([
-                'filename' => $request->file('document_file')->getClientOriginalName(),
-                'type' => $request->file('document_file')->getMimeType(),
-                'path' => $request->file('document_file')->store('documents', 'public'),
-            ]);
-
-        }
 
         //redirect to index
         return redirect()->route('employees.index');
@@ -208,14 +202,12 @@ class EmployeeController extends Controller
         //delete employee
         $employee->delete();
 
-        //unlink employee profile from the public storage
-        if ($employee->profile_picture) {
-            Storage::delete('public/' . $employee->profile_picture);
-        }
+        Storage::disk('public')->delete($employee->profile_picture);
+     
 
         //unlink all employee documents from the public storage
         $employee->documents->each(function ($document) {
-            Storage::delete('public/' . $document->path);
+            Storage::disk('public')->delete($document->path);
         });
 
         //redirect to index

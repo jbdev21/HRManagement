@@ -65,7 +65,7 @@ class WorkExperienceController extends Controller
         }
 
         //redirect to employee profile
-        return redirect()->route('employees.show', $work_experience->employee_id);
+        return redirect()->route('employees.show', [$work_experience->employee_id, 'tab' => 'work-experience']);
     }
 
     /**
