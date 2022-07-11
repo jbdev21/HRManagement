@@ -24,7 +24,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::group(['middleware' => 'web'], function(){
+Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::resource('user', UserController::class)->middleware('admin');
