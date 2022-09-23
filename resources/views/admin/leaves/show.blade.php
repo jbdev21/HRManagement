@@ -15,6 +15,7 @@
                             <label for="">Employee Full Name</label>
                             <input value="{{ $leave->employee->fullname }}" type="text" class="form-control" readonly>
                         </div>
+                        
                         <div class="form-group col-6">
                             <label for="">Type Of Leave To Be Available Of*</label>
                             <input value="{{ $leave->category->name }}" type="text" class="form-control" readonly>
