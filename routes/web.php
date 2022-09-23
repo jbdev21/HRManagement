@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeLeaveController;
 use App\Http\Controllers\WorkExperienceController;
 
 /*
@@ -42,4 +43,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
 
     //WorkExperience resource controller
     Route::resource('work_experiences', WorkExperienceController::class);
+
+    //EmployeeLeave resource controller
+    Route::resource('employee_leaves', EmployeeLeaveController::class);
 });
