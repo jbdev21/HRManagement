@@ -19,10 +19,10 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employee_leaves.index') }}"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('leave.index') }}"
                         aria-expanded="false">
                         <i class="mdi mdi-file"></i>
-                        <span class="hide-menu">Employee Leaves</span>
+                        <span class="hide-menu">Leaves</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

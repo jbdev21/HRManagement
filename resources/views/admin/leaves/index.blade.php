@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Employees Leaves</h1>
-    <a href="{{ route('employee_leaves.create')}}" class="btn btn-lg btn-primary mb-2">Add Leave</a>
+    <a href="{{ route('leave.create')}}" class="btn btn-lg btn-primary mb-2">Add Leave</a>
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -32,12 +32,12 @@
                                         <td>{{ $leave->points_deduction_sick }} </td>
                                         <td>{{ $leave->points_deduction_vacation }} </td>
                                         <td class="text-end">
-                                            <a href="{{ route('employee_leaves.show', $leave->id) }}" class="btn btn-success btn-sm text-white"> Show</a> 
-                                            <a href="{{ route('employee_leaves.edit', $leave->id) }}" class="btn btn-info btn-sm text-white"> Edit</a> 
+                                            <a href="{{ route('leave.show', $leave->id) }}" class="btn btn-success btn-sm text-white"> Show</a> 
+                                            <a href="{{ route('leave.edit', $leave->id) }}" class="btn btn-info btn-sm text-white"> Edit</a> 
                                             <a href="#" 
                                                 onclick="if(confirm('Are you sure to delete employee?')){ document.getElementById('form-{{ $leave->id }}').submit() }" 
                                                 class="btn btn-danger btn-sm text-white"> Delete</a>
-                                            <form method="POST" id="form-{{ $leave->id }}" action="{{ route('employee_leaves.destroy', $leave->id) }}">@csrf @method("DELETE")</form>
+                                            <form method="POST" id="form-{{ $leave->id }}" action="{{ route('leave.destroy', $leave->id) }}">@csrf @method("DELETE")</form>
                                         </td>
                                     </tr>
                                 @endforeach

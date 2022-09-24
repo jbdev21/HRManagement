@@ -28,6 +28,11 @@ class Employee extends Model
         return $this->belongsTo(Department::class);
     }
 
+
+    public function leaves(){
+        return $this->hasMany(Leave::class);
+    }
+
     public function workExperiences()
     {
         return $this->hasMany(WorkExperience::class);

@@ -3,7 +3,7 @@
 @section('page-title', 'Employee Details')
 
 @section('content')
-    <h1>Employees</h1>
+    <h1>Employee</h1>
     <div class="card">
         <div class="card-body">
             @include('admin.employees.show.tabs')
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-sm-9 mt-4">
                     <h5>Employee Work Experience</h5>
-                    <table class="table table-bordered table-responsive mt-2">
+                    <table class="table  table-responsive mt-2">
                         <thead>
                             <tr>
                                 <th>Job Title</th>

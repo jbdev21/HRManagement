@@ -98,15 +98,28 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Employee $employee)
-    {
-        if($request->tab == "document"){
+    {  
+        if ($request->tab == "document") {
+
+            $employee->load("documents");
             $documents = $employee->documents()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
-            return view("admin.employees.show.document", compact('employee',    'documents', 'documentCategories'));
+            return view("admin.employees.show.document", compact('employee', 'documents', 'documentCategories'));
+        
+        }else if($request->tab == "leave"){
+
+            $employee->load("leaves");
+            $leaves = $employee->leaves()->latest()->paginate(25);
+            $leaveCategories = Category::where('type', 'leave')->get();
+            return view("admin.employees.show.leave", compact('employee', 'leaves', 'leaveCategories'));
+        
         }else if($request->tab == "work-experience"){
+            
+            $employee->load("workExperiences");
             $experiences = $employee->workExperiences()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
             return view("admin.employees.show.work-experience", compact('experiences', 'employee', 'documentCategories'));
+
         }else{
             return view('admin.employees.show.index', compact('employee'));
         }

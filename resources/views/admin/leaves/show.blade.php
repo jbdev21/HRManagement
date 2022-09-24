@@ -9,7 +9,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route('employee_leaves.index') }}" class="btn btn-md btn-warning text-end mb-2">Back</a>
+                    <a href="{{ route('leave.index') }}" class="btn btn-md btn-warning text-end mb-2">Back</a>
                     <div class="row">
                         <div class="form-group">
                             <label for="">Employee Full Name</label>

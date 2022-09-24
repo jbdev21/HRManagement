@@ -5,7 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeLeaveController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\WorkExperienceController;
 
 /*
@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware("guest");
 
 Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -45,5 +45,5 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::resource('work_experiences', WorkExperienceController::class);
 
     //EmployeeLeave resource controller
-    Route::resource('employee_leaves', EmployeeLeaveController::class);
+    Route::resource('leave', LeaveController::class);
 });

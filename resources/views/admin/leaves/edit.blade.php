@@ -9,17 +9,12 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('employee_leaves.update', $leave->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('leave.update', $leave->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf @method('PUT')
                     <div class="row">
                         <div class="form-group">
                             <label for="">Employee*</label>
-                            <select name="employee_id" class="form-select">
-                                <option value="">Select Employee</option>
-                                @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}" @if($employee->id == $leave->employee_id) selected @endif>{{ $employee->fullname }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" value="{{ $leave->employee->fullname }}" readonly>
                         </div>
                         <div class="form-group col-6">
                             <label for="">Type Of Leave To Be Available Of*</label>
@@ -95,7 +90,7 @@
                         <hr>
                         <div class="col-sm-12">
                             <button class="btn btn-md btn-primary">Save Changes</button>
-                            <a href="{{ route('employee_leaves.index') }}" class="btn btn-md btn-danger">Cancel</a>
+                            <a href="{{ route('leave.index') }}" class="btn btn-md btn-danger">Cancel</a>
                         </div>
                     </div>
                 </form>
