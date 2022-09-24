@@ -18,6 +18,7 @@
                             <label for="">Type</label>
                             <select name="type" id="" class="form-control">
                                 <option value="document">Document</option>
+                                <option value="leave">Leave</option>
                             </select>
                         </div>
                         <button class="btn btn-lg btn-primary">Submit</button>
