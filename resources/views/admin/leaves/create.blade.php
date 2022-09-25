@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="">Date of Filling</label>
-                                <input type="date" name="date_filling" min="{{ now()->format('Y-m-d') }}"
+                                <input type="date" name="date_filling" value="{{ now()->format('Y-m-d') }}"
                                     class="form-control" required>
                             </div>
                             <div class="form-group">
