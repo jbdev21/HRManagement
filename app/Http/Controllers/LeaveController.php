@@ -26,7 +26,7 @@ class LeaveController extends Controller
         if($request->employee){
             $employees = Employee::findOrFail($request->employee);
         }else{
-            $employees = Employee::all();
+            $employees = Employee::where('working_status', "permanent")->get();
         }
 
         return view('admin.leaves.create', compact('leave_categories', 'employees'));
@@ -93,7 +93,6 @@ class LeaveController extends Controller
     public function update(Request $request, $id)
     {
         $leave = Leave::find($id);
-        $leave->employee_id = $request->employee_id;
         $leave->category_id = $request->category_id;
         $leave->date_filling = $request->date_filling;
         $leave->details = $request->details;

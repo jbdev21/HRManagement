@@ -6,6 +6,7 @@
     <h1>Employee</h1>
     <div class="card">
         <div class="card-body">
+            @include('admin.employees.show.info')
             @include('admin.employees.show.tabs')
             <div class="row">
                 <div class="col-sm-4 mt-4">

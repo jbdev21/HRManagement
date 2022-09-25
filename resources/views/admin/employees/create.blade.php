@@ -57,6 +57,19 @@
                                 <input type="text" name="designation" placeholder="middle name.."  class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="">Working Status</label>
+                                <select name="working_status" id="" class="form-select">
+                                    <option value="permanent">Permanent</option>
+                                    <option value="contractual">Contractual</option>
+                                    <option value="substitute">Substitute</option>
+                                    <option value="temporary">Temporary</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Permanent Date</label>
+                                <input type="date" name="permanent_date" class="form-control">
+                            </div>
+                            <div class="form-group">
                                 <label for="">Note/Remarks</label>
                                 <textarea name="notes"  class="form-control" rows="5"></textarea>
                             </div>

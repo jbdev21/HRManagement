@@ -6,9 +6,15 @@
     <h1>Employee</h1>
     <div class="card">
         <div class="card-body">
+            @include('admin.employees.show.info')
             @include('admin.employees.show.tabs')
             <div class="py-3">
-                <a href="{{ route('leave.create', ['employee' => $employee->id]) }}" class="btn btn-lg btn-primary mb-3 mt-3">Add Leave</a>
+                @if($employee->working_status == "permanent")
+                    <a href="{{ route('leave.create', ['employee' => $employee->id]) }}" class="btn btn-lg btn-primary mb-3 mt-3">Add Leave</a>
+                    <div>
+                        Current Credits: <b>{{ $employee->currentLeaves() }}</b> vacation / <b>{{ $employee->currentLeaves("sick") }}</b> sick
+                    </div>
+                @endif
                 <table class="table table-responsive mt-2">
                     <thead>
                         <tr>
@@ -25,7 +31,9 @@
                         @foreach ($leaves as $leave)
                             <tr>
                                 <td>
-                                    {{ optional($leave->category)->name }}
+                                    <a href="{{ route("leave.show", $leave->id) }}">
+                                        {{ optional($leave->category)->name }}
+                                    </a>
                                 </td>
                                 <td>{{ $leave->date_filling->format("Y-m-d") }}</td>
                                 <td>{{ $leave->no_working_days_applied }}</td>

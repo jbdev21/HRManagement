@@ -14,6 +14,7 @@
                             <thead>
                                 <tr>
                                     <th>FullName</th>
+                                    <th>Status</th>
                                     <th>Age</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
@@ -25,7 +26,12 @@
                             <tbody>
                                 @foreach($employees as $employee)
                                     <tr>
-                                        <td>{{ $employee->fullname }} </td>
+                                        <td>
+                                            <a href="{{ route("employees.show", $employee->id) }}">
+                                                {{ $employee->fullname }} 
+                                            </a>
+                                        </td>
+                                        <td>{{ ucfirst($employee->working_status) }} </td>
                                         <td>{{ $employee->dob->age.' years old' }}</> </td>
                                         <td>{{ $employee->email }} </td>
                                         <td>{{ $employee->mobile_number }} </td>

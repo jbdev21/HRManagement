@@ -68,6 +68,8 @@ class EmployeeController extends Controller
         $employee->notes = $request->notes;
         $employee->department_id = $request->department_id;
         $employee->designation = $request->designation;
+        $employee->working_status = $request->working_status;
+        $employee->permanent_date = $request->permanent_date;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
@@ -99,6 +101,10 @@ class EmployeeController extends Controller
      */
     public function show(Request $request, Employee $employee)
     {  
+        if($request->tab == ""){
+            return redirect()->route("employees.show", [$employee->id, 'tab' => 'leave']);
+        }
+
         if ($request->tab == "document") {
 
             $employee->load("documents");
@@ -170,7 +176,9 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         //return view
-        return view('admin.employee.edit', compact('employee'));
+        //get department
+        $departments = Department::all();
+        return view('admin.employees.edit', compact('employee', 'departments'));
     }
 
     /**
@@ -192,6 +200,8 @@ class EmployeeController extends Controller
         $employee->notes = $request->notes;
         $employee->department_id = $request->department_id;
         $employee->designation = $request->designation;
+        $employee->working_status = $request->working_status;
+        $employee->permanent_date = $request->permanent_date;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {

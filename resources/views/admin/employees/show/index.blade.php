@@ -6,6 +6,8 @@
     <h1>Employees</h1>
     <div class="card">
         <div class="card-body">
+            
+            @include('admin.employees.show.info')
             @include('admin.employees.show.tabs')
             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="col-sm-12 mt-4">
