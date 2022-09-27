@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class EmployeeController extends Controller
+class ApplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,17 +27,14 @@ class EmployeeController extends Controller
                     ->orWhere("last_name", 'LIKE', '%' . $request->q . '%')
                     ->orWhere("middle_name", 'LIKE', '%' . $request->q . '%');
             })
-            ->when($request->status, function ($query) use ($request) {
-                $query->where("working_status", $request->status);
-            })
-            ->where("working_status", "!=", "applicant");
+            ->where("working_status", "applicant");
 
-        $employees = $query
+        $applicants = $query
                         ->withSum('workExperiences', 'points')
                         ->paginate(10);
 
         //return view
-        return view('admin.employees.index', compact('employees'));
+        return view('admin.applicant.index', compact('applicants'));
     }
 
     /**
@@ -50,7 +47,7 @@ class EmployeeController extends Controller
         //get department
         $departments = Department::all();
 
-        return view('admin.employees.create', compact('departments'));
+        return view('admin.applicant.create', compact('departments'));
     }
 
     /**
@@ -71,74 +68,71 @@ class EmployeeController extends Controller
         ]);
 
         //create employee
-        $employee = new Employee;
-        $employee->last_name = $request->last_name;
-        $employee->first_name = $request->first_name;
-        $employee->middle_name = $request->middle_name;
-        $employee->email = $request->email;
-        $employee->mobile_number = $request->mobile_number;
-        $employee->dob = $request->dob;
-        $employee->notes = $request->notes;
-        $employee->department_id = $request->department_id;
-        $employee->designation = $request->designation;
-        $employee->working_status = $request->working_status;
-        $employee->permanent_date = $request->permanent_date;
-        $employee->address = $request->address;
+        $applicant = new Employee;
+        $applicant->last_name = $request->last_name;
+        $applicant->first_name = $request->first_name;
+        $applicant->middle_name = $request->middle_name;
+        $applicant->email = $request->email;
+        $applicant->mobile_number = $request->mobile_number;
+        $applicant->dob = $request->dob;
+        $applicant->notes = $request->notes;
+        $applicant->department_id = $request->department_id;
+        $applicant->designation = $request->designation;
+        $applicant->working_status = "applicant";
+        $applicant->application_status = "on-going";
+        $applicant->permanent_date = $request->permanent_date;
+        $applicant->address = $request->address;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
-            $employee->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
+            $applicant->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
         }
 
-        $employee->save();
+        $applicant->save();
 
         //if has document
         if ($request->hasFile('document_file')) {
-            $employee->addDocumentFromRequest($request, [
+            $applicant->addDocumentFromRequest($request, [
                 'file_name' => $request->file('document_file')->getClientOriginalName(),
                 'type' => $request->document_type,
             ]);
         }
 
         //redirect to index
-        return redirect()->route('employees.index');
+        return redirect()->route('applicant.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\Employee  $applicant
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Employee $employee)
+    public function show(Request $request, $applicant)
     {
+        $applicant = Employee::find($applicant);
+
         if ($request->tab == "") {
-            return redirect()->route("employees.show", [$employee->id, 'tab' => 'leave']);
+            return redirect()->route("applicant.show", [$applicant->id, 'tab' => 'work-experience']);
         }
 
-        $employee->loadSum('workExperiences', 'points');
+        $applicant->loadSum('workExperiences', 'points');
 
         if ($request->tab == "document") {
 
-            $employee->load("documents");
-            $documents = $employee->documents()->paginate(25);
+            $applicant->load("documents");
+            $documents = $applicant->documents()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
-            return view("admin.employees.show.document", compact('employee', 'documents', 'documentCategories'));
-        } else if ($request->tab == "leave") {
+            return view("admin.applicant.show.document", compact('applicant', 'documents', 'documentCategories'));
+        }  else if ($request->tab == "work-experience") {
 
-            $employee->load("leaves");
-            $leaves = $employee->leaves()->latest()->paginate(25);
-            $leaveCategories = Category::where('type', 'leave')->get();
-            return view("admin.employees.show.leave", compact('employee', 'leaves', 'leaveCategories'));
-        } else if ($request->tab == "work-experience") {
-
-            $employee->load("workExperiences");
+            $applicant->load("workExperiences");
             
-            $experiences = $employee->workExperiences()->paginate(25);
+            $experiences = $applicant->workExperiences()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
-            return view("admin.employees.show.work-experience", compact('experiences', 'employee', 'documentCategories'));
+            return view("admin.applicant.show.work-experience", compact('experiences', 'applicant', 'documentCategories'));
         } else {
-            return view('admin.employees.show.index', compact('employee'));
+            return view('admin.applicant.show.index', compact('employee'));
         }
     }
 
@@ -147,18 +141,18 @@ class EmployeeController extends Controller
     public function addDocument($id, Request $request)
     {
         //get employee
-        $employee = Employee::findOrFail($id);
+        $applicant = Employee::findOrFail($id);
 
         //if has document files
         if ($request->hasFile('document_file')) {
-            $employee->addDocumentFromRequest($request, [
+            $applicant->addDocumentFromRequest($request, [
                 'name' => $request->file('document_file')->getClientOriginalName(),
                 'category_id' => $request->category_id,
             ]);
         }
 
         //redirect to index
-        return redirect()->route('employees.show', [$id, 'tab' => 'document']);
+        return redirect()->route('applicant.show', [$id, 'tab' => 'document']);
     }
 
     //employee delere document
@@ -180,59 +174,66 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\Employee  $applicant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($applicant)
     {
         //return view
         //get department
+        $applicant = Employee::find($applicant);
         $departments = Department::all();
-        return view('admin.employees.edit', compact('employee', 'departments'));
+        return view('admin.applicant.edit', compact('applicant', 'departments'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\Employee  $applicant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request, $applicant)
     {
+        $applicant = Employee::find($applicant);
         //update employee data
-        $employee->last_name = $request->last_name;
-        $employee->first_name = $request->first_name;
-        $employee->middle_name = $request->middle_name;
-        $employee->email = $request->email;
-        $employee->mobile_number = $request->mobile_number;
-        $employee->dob = $request->dob;
-        $employee->notes = $request->notes;
-        $employee->department_id = $request->department_id;
-        $employee->designation = $request->designation;
-        $employee->working_status = $request->working_status;
-        $employee->permanent_date = $request->permanent_date;
-        $employee->address = $request->address;
+        $applicant->last_name = $request->last_name;
+        $applicant->first_name = $request->first_name;
+        $applicant->middle_name = $request->middle_name;
+        $applicant->email = $request->email;
+        $applicant->mobile_number = $request->mobile_number;
+        $applicant->dob = $request->dob;
+        $applicant->notes = $request->notes;
+        $applicant->department_id = $request->department_id;
+        $applicant->designation = $request->designation;
+        $applicant->working_status = $request->working_status;
+        $applicant->permanent_date = $request->permanent_date;
+        $applicant->address = $request->address;
 
+    
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
-            $employee->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
+            $applicant->profile_picture = $request->file('profile_picture')->store('pictures', 'public');
         }
 
-        $employee->save();
+        $applicant->save();
+
+        if($request->working_status != "applicant"){
+            $applicant->application_status = "hired";
+        }
 
         if ($request->origin == "profile") {
-            return redirect()->route("employees.show", $employee->id);
+            return redirect()->route("applicant.show", $applicant->id);
         }
         //redirect to index
-        return redirect()->route('employees.index');
+        return redirect()->route('applicant.index');
     }
 
     function leaveCard(Request $request, $id)
     {
         $data = collect();
-        $employee = Employee::findOrFail($id);
-        $dateFrom = $employee->permanent_date;
+        $applicant = Employee::findOrFail($id);
+        $dateFrom = $applicant->permanent_date;
         $currentMonth = now();
         $monthDifference = $currentMonth->diffInMonths($dateFrom) +  1;
         $currentVacationLeave = 0;
@@ -279,7 +280,7 @@ class EmployeeController extends Controller
             ]);
         }
 
-        return view('admin.employees.show.leave-card', compact('employee', 'data'));
+        return view('admin.applicant.show.leave-card', compact('employee', 'data'));
     }
 
 
@@ -319,23 +320,23 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Employee  $employee
+     * @param  \App\Models\Employee  $applicant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy(Employee $applicant)
     {
         //delete employee
-        $employee->delete();
+        $applicant->delete();
 
-        Storage::disk('public')->delete($employee->profile_picture);
+        Storage::disk('public')->delete($applicant->profile_picture);
 
 
         //unlink all employee documents from the public storage
-        $employee->documents->each(function ($document) {
+        $applicant->documents->each(function ($document) {
             Storage::disk('public')->delete($document->path);
         });
 
         //redirect to index
-        return redirect()->route('employees.index');
+        return redirect()->route('applicant.index');
     }
 }

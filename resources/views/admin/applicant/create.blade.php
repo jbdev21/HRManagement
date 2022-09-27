@@ -3,13 +3,13 @@
 @section('page-title', 'Category')
 
 @section('content')
-    <h1>Employee</h1>
+    <h1>Applicant</h1>
     
     <div class="row">
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                     <div class="row">
                         <div class="col-sm-12">
@@ -58,10 +58,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="">Designation/Position</label>
-                                <input type="text" name="designation" placeholder="designation / position"  class="form-control" required>
+                                <label for="">Applied Position</label>
+                                <input type="text" name="designation" placeholder="position"  class="form-control" required>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="">Working Status</label>
                                 <select name="working_status" id="" class="form-select">
                                     <option value="permanent">Permanent</option>
@@ -69,11 +69,11 @@
                                     <option value="substitute">Substitute</option>
                                     <option value="temporary">Temporary</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
+                            </div> --}}
+                            {{-- <div class="form-group">
                                 <label for="">Appointment Date</label>
                                 <input type="date" name="permanent_date" class="form-control">
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="">Note/Remarks</label>
                                 <textarea name="notes"  class="form-control" rows="5"></textarea>

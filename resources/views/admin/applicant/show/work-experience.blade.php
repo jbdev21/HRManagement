@@ -1,20 +1,20 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Employee Details')
+@section('page-title', 'Applicant Details')
 
 @section('content')
-    <h1>Employee</h1>
+    <h1>Applicant</h1>
     <div class="card">
         <div class="card-body">
-            @include('admin.employees.show.info')
-            @include('admin.employees.show.tabs')
+            @include('admin.applicant.show.info')
+            @include('admin.applicant.show.tabs')
             
             <div class="row">
                 <div class="col-sm-3 mt-4">
                     <form action="{{ route('work_experiences.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h5>Experience</h5>
-                            <input type="number" name="employee_id" value="{{ $employee->id }}" class="form-control" hidden>
+                            <input type="number" name="employee_id" value="{{ $applicant->id }}" class="form-control" hidden>
                             <div class="form-group">
                                 <label for="">Name*</label>
                                 <br>
@@ -84,7 +84,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($employee->workExperiences as $experience)
+                            @foreach($applicant->workExperiences as $experience)
                                 <tr>
                                     <td>{{ $experience->job_title }}</td>
                                     <td>{{ $experience->description }}</td>

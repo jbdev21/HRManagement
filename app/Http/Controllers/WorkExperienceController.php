@@ -53,6 +53,7 @@ class WorkExperienceController extends Controller
         $work_experience->description = $request->description;
         $work_experience->start_date = $request->start_date;
         $work_experience->end_date = $request->end_date;
+        $work_experience->points = $request->points;
 
         $work_experience->save();
 

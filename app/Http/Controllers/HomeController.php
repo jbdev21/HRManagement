@@ -41,6 +41,7 @@ class HomeController extends Controller
         $currentLeaves = Leave::whereMonth('date_filling', now()->format('m'))
                                 ->whereYear('date_filling', now()->format("Y"))
                                 ->with(['employee'])
+                                ->has("employee")
                                 ->get();
         return view('admin.dashboard', compact("users", 'documents', 'employees', 'leaves' , 'currentLeaves'));
     }

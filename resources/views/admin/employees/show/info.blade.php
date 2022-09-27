@@ -13,6 +13,7 @@
                 <div class="mb-1">Mobile NUmber: {{ $employee->mobile_number }}</div>
                 <div class="mt-1">Department: {{ $employee->department->name }}</div>
                 <div class="mt-1">Designation: {{ $employee->designation }}</div>
+                <div class="mt-1">Earned Points: {{ $employee->work_experiences_sum_points }}</div>
                 <div class="mt-1">Status: {{ ucfirst($employee->working_status) }} @if($employee->working_status == "permanent") ({{ $employee->permanent_date->format("Y-m-d") }}) @endif</div>
             </div>
         </div>

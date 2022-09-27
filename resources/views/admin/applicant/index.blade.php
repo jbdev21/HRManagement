@@ -3,11 +3,11 @@
 @section('page-title', 'Category')
 
 @section('content')
-    <h1>Employees</h1>
+    <h1>Applicant</h1>
     <form>
         <div class="row mb-3">
             <div class="col-auto" style="min-width: 300px">
-                Search Employee
+                Search Applicant
                 <div class="input-group">
                     <input type="search"  onchange="this.form.submit()" class="form-control" name="q" value="{{ Request::get("q") }}" placeholder="search name" aria-label="Recipient's username"
                         aria-describedby="button-addon2">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-auto">
                 <br>
-                <a href="{{ route('employees.create') }}" class="btn btn-primary mb-2">Add Employee</a>
+                <a href="{{ route('applicant.create') }}" class="btn btn-primary mb-2">Add Applicant</a>
             </div>
         </div>
     </form>
@@ -57,38 +57,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($employees as $employee)
+                                @foreach ($applicants as $applicant)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('employees.show', $employee->id) }}">
-                                                {{ $employee->fullname }}
+                                            <a href="{{ route('applicant.show', $applicant->id) }}">
+                                                {{ $applicant->fullname }}
                                             </a>
                                         </td>
-                                        <td>{{ ucfirst($employee->working_status) }} </td>
-                                        <td>{{ $employee->dob->age . ' years old' }}</>
+                                        <td>{{ ucfirst($applicant->working_status) }} </td>
+                                        <td>{{ $applicant->dob->age . ' years old' }}</>
                                         </td>
-                                        <td>{{ $employee->email }} </td>
-                                        <td>{{ $employee->mobile_number }} </td>
-                                        <td>{{ ucfirst($employee->department->name) }} </td>
-                                        <td>{{ ucfirst($employee->designation) }} </td>
-                                        <td>{{ $employee->work_experiences_sum_points }} </td>
+                                        <td>{{ $applicant->email }} </td>
+                                        <td>{{ $applicant->mobile_number }} </td>
+                                        <td>{{ ucfirst($applicant->department->name) }} </td>
+                                        <td>{{ ucfirst($applicant->designation) }} </td>
+                                        <td>{{ $applicant->work_experiences_sum_points }} </td>
                                         <td class="text-end">
-                                            <a href="{{ route('employees.show', $employee->id) }}"
+                                            <a href="{{ route('applicant.show', $applicant->id) }}"
                                                 class="btn btn-success btn-sm text-white"> Show</a>
-                                            <a href="{{ route('employees.edit', $employee->id) }}"
+                                            <a href="{{ route('applicant.edit', $applicant->id) }}"
                                                 class="btn btn-info btn-sm text-white"> Edit</a>
                                             <a href="#"
-                                                onclick="if(confirm('Are you sure to delete employee?')){ document.getElementById('form-{{ $employee->id }}').submit() }"
+                                                onclick="if(confirm('Are you sure to delete employee?')){ document.getElementById('form-{{ $applicant->id }}').submit() }"
                                                 class="btn btn-danger btn-sm text-white"> Delete</a>
-                                            <form method="POST" id="form-{{ $employee->id }}"
-                                                action="{{ route('employees.destroy', $employee->id) }}">@csrf
+                                            <form method="POST" id="form-{{ $applicant->id }}"
+                                                action="{{ route('applicant.destroy', $applicant->id) }}">@csrf
                                                 @method('DELETE')</form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $employees->links() }}
+                        {{ $applicants->links() }}
                     </div>
                 </div>
             </div>

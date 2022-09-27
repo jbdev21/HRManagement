@@ -11,11 +11,19 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+              
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('employees.index') }}"
                         aria-expanded="false">
                         <i class="mdi mdi-format-paint"></i>
                         <span class="hide-menu">Employees</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('applicant.index') }}"
+                        aria-expanded="false">
+                        <i class="mdi mdi-format-paint"></i>
+                        <span class="hide-menu">Applicant</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

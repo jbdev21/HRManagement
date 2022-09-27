@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -38,6 +39,13 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::post('employees/addDocument/{id}', [EmployeeController::class, 'addDocument'])->name('employees.addDocument');
     //route deleteDocument to EmployeeController
     Route::delete('employees/deleteDocument/{id}', [EmployeeController::class, 'deleteDocument'])->name('employees.deleteDocument');
+    
+    
+    Route::resource('applicant', ApplicantController::class);
+    //route save addDocument to ApplicantController
+    Route::post('applicant/addDocument/{id}', [ApplicantController::class, 'addDocument'])->name('applicant.addDocument');
+    //route deleteDocument to ApplicantController
+    Route::delete('applicant/deleteDocument/{id}', [ApplicantController::class, 'deleteDocument'])->name('applicant.deleteDocument');
 
     //Department resource controller
     Route::resource('departments', DepartmentController::class);
