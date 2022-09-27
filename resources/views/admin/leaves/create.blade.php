@@ -45,8 +45,14 @@
                                 <textarea name="details" class="form-control" rows="5"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="">Number of Working Days Applied For</label>
-                                <input type="number" value="1" min="1" name="no_working_days_applied" class="form-control" required>
+                                <label for="">Inclusive Dates</label>
+                                <a href="#" id="addFieldButton" class="float-end">Add Field</a>
+                                <div class="input-group mb-1">
+                                    <input type="date" class="form-control" required name="inclusive_dates[]">
+                                </div>
+                                <div id="multipleInputContainer">
+                                </div>
+
                             </div>
                             <div class="form-group col-6">
                                 <label for="">commutation</label>
@@ -103,7 +109,7 @@
 
                             <div class="col-sm-12">
                                 <button class="btn btn-md btn-primary">Save Changes</button>
-                                <a href="{{ route('leave.index') }}" class="btn btn-md btn-danger">Cancel</a>
+                                <a href="{{ route('leave.index') }}" class="btn text-white btn-md btn-danger">Cancel</a>
                             </div>
                         </div>
                 </div>
@@ -119,5 +125,24 @@
                     document.getElementById('Disapproval').style.display = 'block';
                 }
             }
+
+            var newInput = `<div class="input-group mb-2">
+                                        <input  type="date" class="form-control" required  name="inclusive_dates[]">
+                                        <button class="btn btn-outline-secondary" class="removeInput" onclick="this.closest('div').remove()" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>
+                                        </button>
+                                    </div>`
+
+            
+
+            var multipleInputContainer = document.getElementById('multipleInputContainer');
+            document.getElementById('addFieldButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                var htmlInputElement = document.createElement('div');
+                htmlInputElement.innerHTML = newInput;
+                multipleInputContainer.appendChild(htmlInputElement)
+            })
         </script>
     @endpush

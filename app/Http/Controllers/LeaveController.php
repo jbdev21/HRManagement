@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Leave;
 use App\Models\Category;
 use App\Models\Employee;
+use App\Models\InclusiveDate;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
@@ -14,7 +15,7 @@ class LeaveController extends Controller
     {
         //get all employees leave
 
-        $leaves = Leave::orderBy('created_at', 'DESC')->paginate(25);
+        $leaves = Leave::orderBy('created_at', 'DESC')->has("employee")->paginate(25);
 
         return view('admin.leaves.index', compact('leaves'));
     }
@@ -47,7 +48,7 @@ class LeaveController extends Controller
         $leave->category_id = $request->category_id;
         $leave->date_filling = $request->date_filling;
         $leave->details = $request->details;
-        $leave->no_working_days_applied = $request->no_working_days_applied;
+        $leave->no_working_days_applied = count($request->inclusive_dates);
         $leave->commutation = $request->commutation;
         $leave->recommendation = $request->recommendation;
         $leave->disapproval_details = $request->disapproval_details;
@@ -63,12 +64,15 @@ class LeaveController extends Controller
 
         $leave->save();
 
-        if($request->hidden_employee){
-            //redirect to employee leave page
-            return redirect()->route('employees.show', [$leave->employee_id, 'tab' => 'leave'])->with('success', 'Employee Leave has been successfully processed');
+        foreach($request->inclusive_dates as $date){
+            $inclusive_date = new InclusiveDate;
+            $inclusive_date->inclusive_date = $date;
+            $leave->inclusive_dates()->save($inclusive_date);
         }
 
-
+        if($request->hidden_employee){
+            return redirect()->route('employees.show', [$leave->employee_id, 'tab' => 'leave'])->with('success', 'Employee Leave has been successfully processed');
+        }
         //redirect to index
         return redirect()->route('leave.index')->with('success', 'Employee Leave has been successfully processed');
     }
@@ -84,7 +88,7 @@ class LeaveController extends Controller
  
     public function edit($id)
     {
-        $leave = Leave::find($id);
+        $leave = Leave::find($id)->load("inclusive_dates");
         $leave_categories = Category::whereType('leave')->get();
         return view('admin.leaves.edit', compact('leave', 'leave_categories'));
     }
@@ -96,7 +100,7 @@ class LeaveController extends Controller
         $leave->category_id = $request->category_id;
         $leave->date_filling = $request->date_filling;
         $leave->details = $request->details;
-        $leave->no_working_days_applied = $request->no_working_days_applied;
+        $leave->no_working_days_applied = count($request->inclusive_dates);
         $leave->commutation = $request->commutation;
         $leave->recommendation = $request->recommendation;
         $leave->disapproval_details = $request->disapproval_details;
@@ -112,6 +116,18 @@ class LeaveController extends Controller
 
         $leave->save();
 
+        $leave->inclusive_dates()->delete();
+        foreach($request->inclusive_dates as $date){
+            $inclusive_date = new InclusiveDate;
+            $inclusive_date->inclusive_date = $date;
+            $leave->inclusive_dates()->save($inclusive_date);
+        }
+        
+        if($request->hidden_employee){
+            //redirect to employee leave page
+            return redirect()->route('employees.show', [$leave->employee_id, 'tab' => 'leave'])->with('success', 'Employee Leave has been successfully processed');
+        }
+
          //redirect to index
          return redirect()->route('leave.index')->with('success', 'Employee Leave has been update successfully');
     }
@@ -119,6 +135,7 @@ class LeaveController extends Controller
     public function destroy($id)
     {
         $leave = Leave::find($id);
+        $leave->inclusive_dates()->delete();
         $leave->delete();
         return redirect()->route('leave.index');
     }

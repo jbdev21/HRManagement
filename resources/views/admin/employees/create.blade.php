@@ -39,6 +39,11 @@
                                 <input type="number" name="mobile_number" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="">Address *</label>
+                                <input type="text" name="address"
+                                    class="form-control" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Email*</label>
                                 <input type="email" name="email" class="form-control" required>
                             </div>
@@ -53,8 +58,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="">Designation</label>
-                                <input type="text" name="designation" placeholder="middle name.."  class="form-control" required>
+                                <label for="">Designation/Position</label>
+                                <input type="text" name="designation" placeholder="designation / position"  class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Working Status</label>
@@ -66,7 +71,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="">Permanent Date</label>
+                                <label for="">Appointment Date</label>
                                 <input type="date" name="permanent_date" class="form-control">
                             </div>
                             <div class="form-group">

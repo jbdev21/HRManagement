@@ -3,8 +3,8 @@
 @section('page-title', 'Employee Leave')
 
 @section('content')
-    <h1>Employees Leaves</h1>
-    <a href="{{ route('leave.create')}}" class="btn btn-lg btn-primary mb-2">Add Leave</a>
+    <h1>Leaves</h1>
+    <a href="{{ route('leave.create')}}" class="btn  btn-primary mb-2">Add Leave</a>
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -13,7 +13,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Employee FullName</th>
+                                    <th>Employee Full Name</th>
                                     <th>Date Filling</th>
                                     <th>Type of Leaves</th>
                                     <th>Recommendation</th>
@@ -28,7 +28,7 @@
                                         <td>{{ $leave->employee->fullname }} </td>
                                         <td>{{ $leave->date_filling->format('M d, Y') }}</> </td>
                                         <td>{{ $leave->category->name }} </td>
-                                        <td>{{ $leave->recommendation }} </td>
+                                        <td>{{ ucfirst($leave->recommendation) }} </td>
                                         <td>{{ $leave->points_deduction_sick }} </td>
                                         <td>{{ $leave->points_deduction_vacation }} </td>
                                         <td class="text-end">

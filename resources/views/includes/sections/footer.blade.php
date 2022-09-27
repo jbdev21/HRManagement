@@ -14,6 +14,4 @@
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     @stack('scripts')
-    </body>
-
-    </html>
+ 

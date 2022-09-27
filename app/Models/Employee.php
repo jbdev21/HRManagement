@@ -16,6 +16,7 @@ class Employee extends Model
     //date
     protected $dates = [
         'dob',
+        'permanent_date'
     ];
 
     //fullname

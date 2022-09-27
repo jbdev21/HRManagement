@@ -21,6 +21,11 @@ class Leave extends Model
         return $this->belongsTo(Employee::class);
     }
 
+    public function inclusive_dates()
+    {
+        return $this->hasMany(InclusiveDate::class);
+    }
+
     //leave category
     public function category()
     {

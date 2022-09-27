@@ -32,7 +32,8 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::resource('category', CategoryController::class)->middleware("admin");
 
     //Employee resource controller  
-    Route::resource('employees', EmployeeController::class)->middleware('admin');
+    Route::get('employees/{id}/leave-card', [EmployeeController::class, 'leaveCard'])->name("employees.leave-card");
+    Route::resource('employees', EmployeeController::class);
     //route save addDocument to EmployeeController
     Route::post('employees/addDocument/{id}', [EmployeeController::class, 'addDocument'])->name('employees.addDocument');
     //route deleteDocument to EmployeeController

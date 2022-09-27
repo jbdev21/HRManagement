@@ -6,7 +6,10 @@ use App\Models\Category;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Department;
+use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
@@ -16,11 +19,19 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    
-        //paginate employees
-        $employees = Employee::paginate(10);
+        $query = Employee::query()
+            ->when($request->q, function ($query) use ($request) {
+                $query->where("first_name", 'LIKE', '%' . $request->q . '%')
+                    ->orWhere("last_name", 'LIKE', '%' . $request->q . '%')
+                    ->orWhere("middle_name", 'LIKE', '%' . $request->q . '%');
+            })
+            ->when($request->status, function ($query) use ($request) {
+                $query->where("working_status", $request->status);
+            });
+
+        $employees = $query->paginate(10);
 
         //return view
         return view('admin.employees.index', compact('employees'));
@@ -35,9 +46,8 @@ class EmployeeController extends Controller
     {
         //get department
         $departments = Department::all();
-        
-        return view('admin.employees.create', compact('departments'));
 
+        return view('admin.employees.create', compact('departments'));
     }
 
     /**
@@ -70,6 +80,7 @@ class EmployeeController extends Controller
         $employee->designation = $request->designation;
         $employee->working_status = $request->working_status;
         $employee->permanent_date = $request->permanent_date;
+        $employee->address = $request->address;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
@@ -84,13 +95,10 @@ class EmployeeController extends Controller
                 'file_name' => $request->file('document_file')->getClientOriginalName(),
                 'type' => $request->document_type,
             ]);
-
-
         }
-        
+
         //redirect to index
         return redirect()->route('employees.index');
-
     }
 
     /**
@@ -100,8 +108,8 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Employee $employee)
-    {  
-        if($request->tab == ""){
+    {
+        if ($request->tab == "") {
             return redirect()->route("employees.show", [$employee->id, 'tab' => 'leave']);
         }
 
@@ -111,28 +119,24 @@ class EmployeeController extends Controller
             $documents = $employee->documents()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
             return view("admin.employees.show.document", compact('employee', 'documents', 'documentCategories'));
-        
-        }else if($request->tab == "leave"){
+        } else if ($request->tab == "leave") {
 
             $employee->load("leaves");
             $leaves = $employee->leaves()->latest()->paginate(25);
             $leaveCategories = Category::where('type', 'leave')->get();
             return view("admin.employees.show.leave", compact('employee', 'leaves', 'leaveCategories'));
-        
-        }else if($request->tab == "work-experience"){
-            
+        } else if ($request->tab == "work-experience") {
+
             $employee->load("workExperiences");
             $experiences = $employee->workExperiences()->paginate(25);
             $documentCategories = Category::where('type', 'document')->get();
             return view("admin.employees.show.work-experience", compact('experiences', 'employee', 'documentCategories'));
-
-        }else{
+        } else {
             return view('admin.employees.show.index', compact('employee'));
         }
-    
     }
 
-    
+
 
     public function addDocument($id, Request $request)
     {
@@ -202,6 +206,7 @@ class EmployeeController extends Controller
         $employee->designation = $request->designation;
         $employee->working_status = $request->working_status;
         $employee->permanent_date = $request->permanent_date;
+        $employee->address = $request->address;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
@@ -210,8 +215,99 @@ class EmployeeController extends Controller
 
         $employee->save();
 
+        if ($request->origin == "profile") {
+            return redirect()->route("employees.show", $employee->id);
+        }
         //redirect to index
         return redirect()->route('employees.index');
+    }
+
+    function leaveCard(Request $request, $id)
+    {
+        $data = collect();
+        $employee = Employee::findOrFail($id);
+        $dateFrom = $employee->permanent_date;
+        $currentMonth = now();
+        $monthDifference = $currentMonth->diffInMonths($dateFrom) +  1;
+        $currentVacationLeave = 0;
+        $currentSickLeave = 0;
+
+        for ($i = 0; $monthDifference > $i; $i++) {
+            $clonedMonth = clone $dateFrom;
+            $currentVacationLeave += (float) config("app.credits_per_month");
+            $currentSickLeave += (float) config("app.credits_per_month");
+            $newMonth = $clonedMonth->addMonths($i);
+            $leaves = Leave::query()
+                        ->where("recommendation", "approval")
+                        ->whereHas("inclusive_dates", function($query) use ($newMonth) {
+                            $query->whereMonth('inclusive_date', $newMonth->format('m'))
+                                ->whereYear('inclusive_date', $newMonth->format('Y'));
+                        });
+
+            foreach($leaves->get() as $leave){
+         
+                $currentVacationLeave -= $leave->points_deduction_vacation;
+                $currentSickLeave -= $leave->points_deduction_sick;
+                $data->push([
+                    'explanation' => $leave->details,
+                    'balance_vacation_leave' => $currentVacationLeave ?? "",
+                    'balance_sick_leave' => $currentSickLeave ?? "",
+                    'earned_vacation_leave' => '',
+                    'earned_sick_leave' => '',
+                    'enjoyed_vacation_leave' => $leave->points_deduction_vacation ?? "",
+                    'enjoyed_sick_leave' => $leave->points_deduction_sick ?? "",
+                    'dates' => $this->formatInclusiveDates($leave->inclusive_dates)
+                ]);
+            }
+
+        
+            $data->push([
+                'explanation' => '',
+                'balance_vacation_leave' => $currentVacationLeave ?? "",
+                'balance_sick_leave' => $currentSickLeave ?? "",
+                'earned_vacation_leave' => config("app.credits_per_month"),
+                'earned_sick_leave' => config("app.credits_per_month"),
+                'enjoyed_vacation_leave' => "",
+                'enjoyed_sick_leave' => "",
+                'dates' => $clonedMonth->startOfMonth()->format("m/d/y") . ' - ' . $clonedMonth->endOfMonth()->format("m/d/y")
+            ]);
+        }
+
+        return view('admin.employees.show.leave-card', compact('employee', 'data'));
+    }
+
+
+
+    function formatInclusiveDates($dateArray) {
+
+        $string = '';
+        if(!$dateArray->first()){
+            return '';
+        }
+        $prevMonth = $dateArray->first()->inclusive_date->format('Y-m');
+
+        foreach($dateArray as $date){
+
+            $formatedDate = Carbon::parse($date->inclusive_date);
+            if($formatedDate->format('Y-m') == $prevMonth){
+                if($string == ""){
+                    $string .= $formatedDate->format('m/d');
+                }else{
+                    $string .= $formatedDate->format(',d');
+                }
+            }else{
+                if($string == ""){
+                    $string .= $formatedDate->format(',d');
+                }else{
+                    $string .= $formatedDate->format(' m/d');
+                }
+            }
+            $prevMonth = $formatedDate->format('Y-m');
+        }
+
+        $string .= $dateArray->first()->inclusive_date->format('/Y');
+
+        return $string;
     }
 
     /**
@@ -226,7 +322,7 @@ class EmployeeController extends Controller
         $employee->delete();
 
         Storage::disk('public')->delete($employee->profile_picture);
-     
+
 
         //unlink all employee documents from the public storage
         $employee->documents->each(function ($document) {

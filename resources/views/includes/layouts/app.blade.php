@@ -1,6 +1,5 @@
-<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-        @include('includes.sections.header')
+    @include('includes.sections.header')
     <body>
         @include('includes.menus.top')   
         @include('includes.menus.side')
@@ -19,6 +18,6 @@
         </div>
 
         @include('includes.sections.footer')
-        <script src="{{ asset('/js/app.js') }}">
+        <script src="{{ asset('/js/app.js') }}" />
     </body>
 </html>

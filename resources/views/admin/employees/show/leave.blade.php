@@ -10,7 +10,8 @@
             @include('admin.employees.show.tabs')
             <div class="py-3">
                 @if($employee->working_status == "permanent")
-                    <a href="{{ route('leave.create', ['employee' => $employee->id]) }}" class="btn btn-lg btn-primary mb-3 mt-3">Add Leave</a>
+                    <a href="{{ route('leave.create', ['employee' => $employee->id]) }}" class="btn btn-primary mb-3 mt-3">Add Leave</a>
+                    <a href="{{ route('employees.leave-card', $employee->id) }}" target="_blank" class="btn btn-primary mb-3 mt-3">Leave Card</a>
                     <div>
                         Current Credits: <b>{{ $employee->currentLeaves() }}</b> vacation / <b>{{ $employee->currentLeaves("sick") }}</b> sick
                     </div>
@@ -40,7 +41,9 @@
                                 <td>{{ ucfirst($leave->recommendation) }}</td>
                                 <td>{{ $leave->points_deduction_vacation }}</td>
                                 <td>{{ $leave->points_deduction_sick }}</td>
-                                <td>
+                                <td class="text-end">
+                                    <a href="{{ route("leave.edit", [$leave->id, 'employee' => $employee->id]) }}"
+                                        class="btn btn-primary btn-sm text-white"> Update</a>
                                     <a href="#"
                                         onclick="if(confirm('Are you sure to delete documnet?')){ document.getElementById('form-{{ $leave->id }}').submit() }"
                                         class="btn btn-danger btn-sm text-white"> Delete</a>

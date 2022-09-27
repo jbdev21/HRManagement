@@ -12,19 +12,31 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" name="name" placeholder=" category name.." required class="form-control">
+                            <input type="text" name="name" placeholder=" Category name.." required class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="">Type</label>
                             <select name="type" id="" class="form-control">
-                                <option value="document">Document</option>
-                                <option value="leave">Leave</option>
+                                <option value="leave" @if(Request::get("type") == "leave") selected @endif >Leave</option>
+                                <option value="document	" @if(Request::get("type") == "document") selected @endif>Document</option>
                             </select>
                         </div>
                         <button class="btn btn-lg btn-primary">Submit</button>
                     </form>
                 </div>
                 <div class="col-sm-8">
+                    <form>
+                        <div class="row">
+                            <div class="col-auto">
+                                Type
+                                <select name="type" onchange="this.form.submit()" class="form-select">
+                                    <option value=""> - all types -</option>
+                                    <option value="leave" @if(Request::get("type") == "leave") selected @endif >Leave</option>
+                                    <option value="document	" @if(Request::get("type") == "document") selected @endif>Document</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -38,7 +50,7 @@
                                 @foreach($categories as $category)
                                     <tr>
                                         <td>{{ $category->name }} </td>
-                                        <td>{{ $category->type }} </td>
+                                        <td>{{ ucfirst($category->type) }} </td>
                                         <td class="text-end">
                                             <a href="{{ route('category.edit', $category->id) }}" class="btn btn-info btn-sm text-white"> Edit</a>
                                             <a href="#" 

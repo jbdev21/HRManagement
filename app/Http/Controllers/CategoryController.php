@@ -12,9 +12,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::query()
+                ->when($request->type, function($query) use ($request){
+                    $query->where("type", $request->type);
+                })
+                ->paginate();
         return view("admin.category.index", compact("categories"));
     }
 

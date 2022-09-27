@@ -1,13 +1,13 @@
-<body>
+
     {{-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div> --}}
-    <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
+    <div id="main-wrapper"  data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
         data-boxed-layout="full">
-        <header class="topbar" data-navbarbg="skin6">
+        <header class="topbar d-print-none" data-navbarbg="skin6">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <div class="navbar-header" data-logobg="skin5">
                     <!-- This is for the sidebar toggle which is visible on mobile only -->

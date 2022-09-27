@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Leave;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -35,6 +36,12 @@ class HomeController extends Controller
         $users = DB::table("users")->count();
         $documents = DB::table("documents")->count();
         $employees = DB::table("employees")->count();
-        return view('admin.dashboard', compact("users", 'documents', 'employees'));
+        $leaves = DB::table("leaves")->count();
+
+        $currentLeaves = Leave::whereMonth('date_filling', now()->format('m'))
+                                ->whereYear('date_filling', now()->format("Y"))
+                                ->with(['employee'])
+                                ->get();
+        return view('admin.dashboard', compact("users", 'documents', 'employees', 'leaves' , 'currentLeaves'));
     }
 }
