@@ -5,6 +5,9 @@
 @section('content')
  <!-- Content -->
  <div class="container-fluid">
+    <div class="text-center mb-3">
+        <img src="/site/images/logo.jfif" alt="">
+    </div>
     <div class="row">
         <div class="col-4">
             <div class="card">
