@@ -7,4 +7,9 @@
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     @stack("styles")
+    <style>
+        .card, .card-body{
+            background-color:transparent !important;
+        }
+    </style>
 </head>
