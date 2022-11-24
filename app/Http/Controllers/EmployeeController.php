@@ -84,6 +84,9 @@ class EmployeeController extends Controller
         $employee->working_status = $request->working_status;
         $employee->permanent_date = $request->permanent_date;
         $employee->address = $request->address;
+        $employee->salary_grade = $request->salary_grade;
+        $employee->level_of_position = $request->level_of_position;
+        $employee->mode_of_accession = $request->mode_of_accession;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {
@@ -213,6 +216,9 @@ class EmployeeController extends Controller
         $employee->working_status = $request->working_status;
         $employee->permanent_date = $request->permanent_date;
         $employee->address = $request->address;
+        $employee->salary_grade = $request->salary_grade;
+        $employee->level_of_position = $request->level_of_position;
+        $employee->mode_of_accession = $request->mode_of_accession;
 
         //if employee has profile picture
         if ($request->hasFile('profile_picture')) {

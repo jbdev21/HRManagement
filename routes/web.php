@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\WorkExperienceController;
 
 /*
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::delete('employees/deleteDocument/{id}', [EmployeeController::class, 'deleteDocument'])->name('employees.deleteDocument');
     
     
+    Route::get('report', [ReportController::class, 'accession'])->name("report.employee.accession");
     Route::resource('applicant', ApplicantController::class);
     //route save addDocument to ApplicantController
     Route::post('applicant/addDocument/{id}', [ApplicantController::class, 'addDocument'])->name('applicant.addDocument');

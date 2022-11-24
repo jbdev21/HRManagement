@@ -2,97 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+ 
+    public function accession(Request $request)
     {
-        
-        $query = Transaction::query();
-        $amount = null;
+        $quarter = $request->quarter;
+        $employees = [];
 
-        //if date this days filter
-        if ($request->from){
-            $from = Carbon::parse($request->from);
-            $to = Carbon::parse($request->to);
-            $query->whereBetween('created_at', [$from, $to]);
-            $amount = $query->sum("total_price");
+        if ($request->quarter && $request->year) {
+            $employees = Employee::query()
+                            ->where("working_status", "!=", "applicant")
+                            ->whereMonth('permanent_date', ">=", $this->getMonthsInQuarter($quarter)[0])
+                            ->whereMonth('permanent_date', "<=", $this->getMonthsInQuarter($quarter)[2])
+                            ->whereYear('permanent_date', $request->year)
+                            ->get();
         }
-
-        $transactions = $query->latest()->get();
-        return view("admin.report.index", compact("transactions", "amount"));
+        
+        return view("admin.report.accession", compact("employees"));
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
+    function getMonthsInQuarter($quarter){
+        switch($quarter){
+            case 1:
+                return ['01','02','03'];
+                break;
+            case 2:
+                return ['04','05','06'];
+                break;
+            case 3:
+                return ['07','08','09'];
+                break;
+            case 4:
+                return ['10','11','12'];
+                break;
+        }
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  
 }

@@ -79,15 +79,31 @@
                                         placeholder="middle name.." class="form-control" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Salary Grade</label>
+                                    <select name="salary_grade" class="form-select">
+                                        @for($i=1; $i < 35; $i++)
+                                            <option @if ($employee->salary_grade == $i) selected @endif value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Level of Position</label>
+                                    <input type="text" name="level_of_position" value="{{ $employee->level_of_position }}" placeholder="level of position"  class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Mode of Accession</label>
+                                    <input type="text" name="mode_of_accession" value="{{ $employee->accession }}" placeholder="mode of accession"  class="form-control">
+                                </div>
+                                <div class="form-group">
                                     <label for="">Working Status</label>
                                     <select name="working_status" class="form-select">
-                                        <option value="permanent">Permanent</option>
-                                        <option value="contractual" @if ($employee->working_status == 'contractual') selected @endif>
-                                            Contractual</option>
-                                        <option value="substitute" @if ($employee->working_status == 'substitute') selected @endif>
-                                            Substitute</option>
-                                        <option value="temporary" @if ($employee->working_status == 'temporary') selected @endif>
-                                            Temporary</option>
+                                            <option @if ($employee->working_status == 'permanent') selected @endif value="permanent">Permanent</option>
+                                            <option @if ($employee->working_status == 'temporary') selected @endif value="temporary">Temporary</option>
+                                            <option @if ($employee->working_status == 'co-terminous') selected @endif value="co-terminous">Co-Terminous</option>
+                                            <option @if ($employee->working_status == 'fixed term') selected @endif value="fixed term">Fixed Term</option>
+                                            <option @if ($employee->working_status == 'contractual') selected @endif value="contractual">Contractual</option>
+                                            <option @if ($employee->working_status == 'substitute') selected @endif value="substitute">Substitute</option>
+                                            <option @if ($employee->working_status == 'provisional') selected @endif value="provisional">Provisional</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

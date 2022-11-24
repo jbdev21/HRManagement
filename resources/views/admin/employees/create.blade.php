@@ -62,12 +62,31 @@
                                 <input type="text" name="designation" placeholder="designation / position"  class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="">Salary Grade</label>
+                                <select name="salary_grade" class="form-select">
+                                    @for($i=1; $i < 35; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Level of Position</label>
+                                <input type="text" name="level_of_position" placeholder="level of position"  class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Mode of Accession</label>
+                                <input type="text" name="mode_of_accession"  placeholder="mode of accession"  class="form-control">
+                            </div>
+                            <div class="form-group">
                                 <label for="">Working Status</label>
                                 <select name="working_status" id="" class="form-select">
                                     <option value="permanent">Permanent</option>
+                                    <option value="temporary">Temporary</option>
+                                    <option value="co-terminous">Co-Terminous</option>
+                                    <option value="fixed term">Fixed Term</option>
                                     <option value="contractual">Contractual</option>
                                     <option value="substitute">Substitute</option>
-                                    <option value="temporary">Temporary</option>
+                                    <option value="provisional">Provisional</option>
                                 </select>
                             </div>
                             <div class="form-group">

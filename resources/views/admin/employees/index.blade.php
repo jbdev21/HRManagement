@@ -33,6 +33,7 @@
             <div class="col-auto">
                 <br>
                 <a href="{{ route('employees.create') }}" class="btn btn-primary mb-2">Add Employee</a>
+                <a href="{{ route('report.employee.accession') }}" class="btn btn-primary mb-2">Accession Report</a>
             </div>
         </div>
     </form>
