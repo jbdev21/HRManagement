@@ -11,5 +11,9 @@
         .card, .card-body{
             background-color:transparent !important;
         }
+
+        .btn{
+            color:#fff;
+        }
     </style>
 </head>

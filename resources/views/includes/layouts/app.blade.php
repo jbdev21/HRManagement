@@ -4,7 +4,7 @@
         @include('includes.menus.top')   
         @include('includes.menus.side')
            <!-- Content -->
-        <div class="container-fluid" id="app" style="background-image:url(assets/images/bg.jpg); background:position:top; background-size:cover; height:93vh" >
+        <div class="container-fluid" id="app" style="background-image:url(assets/images/bg.jpg); background:position:top; background-size:cover; min-height:93vh" >
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

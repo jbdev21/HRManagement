@@ -6,33 +6,39 @@
  <!-- Content -->
  <div class="container-fluid">
     <div class="text-center mb-3">
-        <img src="/site/images/logo.jfif" alt="">
+        <img src="/site/images/estancia.png" alt="">
     </div>
     <div class="row">
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <h1>{{ $leaves }}</h1>
-                    <h4>Leaves</h4>
-                    <a href="{{ route("leave.index") }}" class="btn btn-primary">Manage</a>
+                    <div class="bg-primary text-white p-3">
+                        <h1>{{ $leaves }}</h1>
+                        <h4>Leaves</h4>
+                        <a href="{{ route("leave.index") }}" class="btn btn-primary">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body ">
+                    <div class="bg-primary text-white p-3">
+                        <h1>{{ $employees }}</h1>
+                        <h4>Employees</h4>
+                        <a href="{{ route("employees.index") }}" class="btn btn-primary">Manage</a>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <h1>{{ $employees }}</h1>
-                    <h4>Employees</h4>
-                    <a href="{{ route("employees.index") }}" class="btn btn-primary">Manage</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <h1>{{ $users }}</h1>
-                    <h4>Users</h4>
-                    <a href="{{ route("user.index") }}" class="btn btn-primary">Manage</a>
+                    <div class="bg-primary text-white p-3">
+                        <h1>{{ $users }}</h1>
+                        <h4>Users</h4>
+                        <a href="{{ route("user.index") }}" class="btn btn-primary">Manage</a>
+                    </div>
                 </div>
             </div>
         </div>

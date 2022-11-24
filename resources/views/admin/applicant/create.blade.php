@@ -81,7 +81,7 @@
                             <hr>
                             
                             <button class="btn btn-md btn-primary">Save Changes</button>
-                            <a href="{{ route('user.index') }}" class="btn btn-md btn-danger">Cancel</a>
+                            <a href="{{ route('applicant.index') }}" class="btn btn-md btn-danger text-white">Cancel</a>
                     </div>
                 </div>
             </form>
