@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label for="">Document File*</label>
                             <br>
-                            <input type="file" name="document_file" class="form-control" required>
+                            <input type="file" multiple name="document_files[]" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="">Document Type*</label>

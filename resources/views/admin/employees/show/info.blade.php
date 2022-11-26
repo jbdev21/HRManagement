@@ -10,7 +10,7 @@
                 <div class="mb-1">Age: {{ $employee->dob->age.' years old' }}</div>
                 <div class="mb-1">Fullname: {{ $employee->fullname }}</div>
                 <div class="mb-1">Email: {{ $employee->email }}</div>
-                <div class="mb-1">Mobile NUmber: {{ $employee->mobile_number }}</div>
+                <div class="mb-1">Mobile Number: {{ $employee->mobile_number }}</div>
                 <div class="mt-1">Department: {{ $employee->department->name }}</div>
                 <div class="mt-1">Designation: {{ $employee->designation }}</div>
                 <div class="mt-1">Earned Points: {{ $employee->work_experiences_sum_points }}</div>

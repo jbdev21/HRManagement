@@ -153,11 +153,17 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
 
         //if has document files
-        if ($request->hasFile('document_file')) {
-            $employee->addDocumentFromRequest($request, [
-                'name' => $request->file('document_file')->getClientOriginalName(),
-                'category_id' => $request->category_id,
-            ]);
+        
+        if ($request->hasFile('document_files')) {
+            
+            foreach($request->file('document_files') as $file){
+                $document = new Document();
+                $document->name = $file->getClientOriginalName();
+                $document->category_id = $request->category_id;
+                $document->path = $file->store('documents', 'public');
+                $employee->documents()->save($document);
+            }
+
         }
 
         //redirect to index

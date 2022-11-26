@@ -1,10 +1,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    @include('includes.sections.header')
-    <body >
-        @include('includes.menus.top')   
+@include('includes.sections.header')
+    <body>
+        @include('includes.menus.top')
         @include('includes.menus.side')
-           <!-- Content -->
-        <div class="container-fluid" id="app" style="background-image:url(assets/images/bg.jpg); background:position:top; background-size:cover; min-height:93vh" >
+        <!-- Content -->
+        <div class="container-fluid" id="app"
+            style="background-image:url(assets/images/bg.jpg); background:position:top; background-size:cover; min-height:100vh" >
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -18,6 +19,6 @@
         </div>
 
         @include('includes.sections.footer')
-        <script src="{{ asset('/js/app.js') }}" />
+        <script src="{{ asset('/js/app.js') }}"></script>
     </body>
 </html>

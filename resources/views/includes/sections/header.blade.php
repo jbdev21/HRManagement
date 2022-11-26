@@ -12,6 +12,10 @@
             background-color:transparent !important;
         }
 
+        .page-wrapper{
+            background-color: transparent;
+        }
+
         .btn{
             color:#fff;
         }

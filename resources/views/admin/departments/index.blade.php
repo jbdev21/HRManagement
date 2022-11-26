@@ -1,7 +1,5 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Category')
-
 @section('content')
     <h1>Departments</h1>
     <div class="card">

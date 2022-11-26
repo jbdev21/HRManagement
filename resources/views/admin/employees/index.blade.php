@@ -1,12 +1,10 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Category')
-
 @section('content')
     <h1>Employees</h1>
     <form>
         <div class="row mb-3">
-            <div class="col-auto" style="min-width: 300px">
+            <div class="col">
                 Search Employee
                 <div class="input-group">
                     <input type="search"  onchange="this.form.submit()" class="form-control" name="q" value="{{ Request::get("q") }}" placeholder="search name" aria-label="Recipient's username"
@@ -20,7 +18,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-auto" style="min-width: 300px">
+            <div class="col">
                 Working Status
                 <select name="status" onchange="this.form.submit()" class="form-select">
                     <option value=""> - all status -</option>
@@ -30,7 +28,7 @@
                     <option value="temporary" @if(Request::get("status") == "temporary") selected @endif>Temporary</option>
                 </select>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <br>
                 <a href="{{ route('employees.create') }}" class="btn btn-primary mb-2">Add Employee</a>
                 <a href="{{ route('report.employee.accession') }}" class="btn btn-primary mb-2">Accession Report</a>
@@ -93,7 +91,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
