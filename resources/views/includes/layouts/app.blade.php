@@ -19,6 +19,5 @@
         </div>
 
         @include('includes.sections.footer')
-        <script src="{{ asset('/js/app.js') }}"></script>
     </body>
 </html>

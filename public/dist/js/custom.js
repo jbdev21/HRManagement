@@ -105,25 +105,25 @@ $(function() {
     // ============================================================== 
     // Last month earning
     // ==============================================================
-    var sparklineLogin = function() {
-        $('.lastmonth').sparkline([6, 10, 9, 11, 9, 10, 12], {
-            type: 'bar',
-            height: '35',
-            barWidth: '4',
-            width: '100%',
-            resize: true,
-            barSpacing: '8',
-            barColor: '#2961ff'
-        });
+    // var sparklineLogin = function() {
+    //     $('.lastmonth').sparkline([6, 10, 9, 11, 9, 10, 12], {
+    //         type: 'bar',
+    //         height: '35',
+    //         barWidth: '4',
+    //         width: '100%',
+    //         resize: true,
+    //         barSpacing: '8',
+    //         barColor: '#2961ff'
+    //     });
 
-    };
-    var sparkResize;
+    // };
+    // var sparkResize;
 
-    $(window).resize(function(e) {
-        clearTimeout(sparkResize);
-        sparkResize = setTimeout(sparklineLogin, 500);
-    });
-    sparklineLogin();
+    // $(window).resize(function(e) {
+    //     clearTimeout(sparkResize);
+    //     sparkResize = setTimeout(sparklineLogin, 500);
+    // });
+    // sparklineLogin();
 
     // ============================================================== 
     // This is for the innerleft sidebar

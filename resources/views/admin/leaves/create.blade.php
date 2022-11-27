@@ -28,7 +28,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="">Type Of Leave To Be Available Of*</label>
-                                <select name="category_id" class="form-select" required>
+                                <select name="category_id" id="leaveTypeSelect" class="form-select" required>
                                     <option value="">Select Type of Leave</option>
                                     @foreach ($leave_categories as $leave)
                                         <option value="{{ $leave->id }}">{{ $leave->name }}</option>
@@ -120,6 +120,9 @@
     @endsection
     @push('scripts')
         <script>
+            let days = 1;
+            let selectedText = ''
+
             document.getElementById('isDisapprove').onchange = function() {
                 if (this.value == 'disapproval') {
                     document.getElementById('Disapproval').style.display = 'block';
@@ -127,22 +130,48 @@
             }
 
             var newInput = `<div class="input-group mb-2">
-                                        <input  type="date" class="form-control" required  name="inclusive_dates[]">
-                                        <button class="btn btn-outline-secondary" class="removeInput" onclick="this.closest('div').remove()" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                            </svg>
-                                        </button>
-                                    </div>`
+                                <input  type="date" class="form-control" required  name="inclusive_dates[]">
+                                <button class="btn btn-outline-secondary text-dark removeInput" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </button>
+                            </div>`
 
-            
-
-            var multipleInputContainer = document.getElementById('multipleInputContainer');
-            document.getElementById('addFieldButton').addEventListener('click', function(e) {
-                e.preventDefault();
+            $('#addFieldButton').on("click", function(e) {
+                e.preventDefault()
+                days++
                 var htmlInputElement = document.createElement('div');
                 htmlInputElement.innerHTML = newInput;
-                multipleInputContainer.appendChild(htmlInputElement)
+                $('#multipleInputContainer').append(htmlInputElement)
+
+                updateLeaveInputs()
             })
+
+            $("#leaveTypeSelect").change(function(){
+                var text = this.options[this.selectedIndex].text;
+                selectedText = text;
+            })
+            
+            $(document).on("click", '.removeInput', function(e) {
+                days--
+                this.closest('div').remove();
+                updateLeaveInputs()
+            })
+
+            function updateLeaveInputs(){
+                if(selectedText.includes("Vacation")){
+                    $('input[name=points_deduction_vacation]').val(days)
+                }else{
+                    $('input[name=points_deduction_vacation]').val(0)
+                }
+
+                if(selectedText.includes("Sick")){
+                    $('input[name=points_deduction_sick]').val(days)
+                }else{
+                    $('input[name=points_deduction_sick]').val(0)
+                }
+            }
+
         </script>
     @endpush
