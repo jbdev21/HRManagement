@@ -105,7 +105,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Appointment Date</label>
-                            <input type="date" name="permanent_date" value="{{ $employee->permanent_date->format("Y-m-d") }}"
+                            <input type="date" name="permanent_date" value="{{ optional($employee->permanent_date)->format("Y-m-d") }}"
                                 class="form-control">
                         </div>
                         <div class="form-group">
