@@ -6,7 +6,7 @@
     <h1>New Employee Leave</h1>
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-10">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('leave.store') }}" method="POST" enctype="multipart/form-data">
