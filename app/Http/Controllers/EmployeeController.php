@@ -68,6 +68,7 @@ class EmployeeController extends Controller
             'middle_name' => 'required',
             'email' => 'required|email',
             'department_id' => 'required',
+            'mode_of_accession' => ['required']
         ]);
 
         //create employee
