@@ -19,5 +19,9 @@
         .btn{
             color:#fff;
         }
+
+        body, td, th{
+            color:black !important;
+        }
     </style>
 </head>

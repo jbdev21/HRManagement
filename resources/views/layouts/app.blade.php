@@ -15,6 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @stack("styles")
 </head>
 <body>
