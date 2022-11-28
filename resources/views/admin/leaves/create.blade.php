@@ -15,11 +15,10 @@
                         <div class="row">
                             <div class="form-group">
                                 <label for="">Employee*</label>
-                                <select name="employee_id" class="form-select" required>
+                                <select name="employee_id" class="form-select select2" required>
                                     @if (Request::get('employee'))
                                         <option selected value="{{ $employees->id }}">{{ $employees->fullname }}</option>
-                                    @else
-                                        <option value="">Select Employee</option>
+                                    @else   
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}">{{ $employee->fullname }}</option>
                                         @endforeach
@@ -118,10 +117,22 @@
         </div>
 
     @endsection
+
+    @push("styles")
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    @endpush
+
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
         <script>
             let days = 1;
             let selectedText = ''
+
+            $( '.select2' ).select2( {
+                theme: 'bootstrap-5'
+            } );
 
             document.getElementById('isDisapprove').onchange = function() {
                 if (this.value == 'disapproval') {
