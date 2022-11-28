@@ -12,10 +12,10 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="bg-primary text-white p-3">
+                    <div class="bg-secondary text-white p-3">
                         <h1>{{ $leaves }}</h1>
                         <h4>Leaves</h4>
-                        <a href="{{ route("leave.index") }}" class="btn btn-primary">Manage</a>
+                        <a href="{{ route("leave.index") }}" class="btn btn-secondary">Manage</a>
                     </div>
                 </div>
             </div>
@@ -23,10 +23,10 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body ">
-                    <div class="bg-primary text-white p-3">
+                    <div class="bg-secondary text-white p-3">
                         <h1>{{ $employees }}</h1>
                         <h4>Employees</h4>
-                        <a href="{{ route("employees.index") }}" class="btn btn-primary">Manage</a>
+                        <a href="{{ route("employees.index") }}" class="btn btn-secondary">Manage</a>
                     </div>
                 </div>
             </div>
@@ -34,10 +34,10 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="bg-primary text-white p-3">
+                    <div class="bg-secondary text-white p-3">
                         <h1>{{ $users }}</h1>
                         <h4>Users</h4>
-                        <a href="{{ route("user.index") }}" class="btn btn-primary">Manage</a>
+                        <a href="{{ route("user.index") }}" class="btn btn-secondary">Manage</a>
                     </div>
                 </div>
             </div>
