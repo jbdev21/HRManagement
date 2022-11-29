@@ -257,6 +257,7 @@ class EmployeeController extends Controller
             $currentSickLeave += (float) config("app.credits_per_month");
             $newMonth = $clonedMonth->addMonths($i);
             $leaves = Leave::query()
+                        ->where("employee_id", $employee->id)
                         ->where("recommendation", "approval")
                         ->whereHas("inclusive_dates", function($query) use ($newMonth) {
                             $query->whereMonth('inclusive_date', $newMonth->format('m'))
