@@ -13,10 +13,10 @@
                 <div class="col-sm-3 mt-4">
                     <form action="{{ route('work_experiences.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <h5>Experience</h5>
+                        {{-- <h5>Experience</h5> --}}
                             <input type="number" name="employee_id" value="{{ $employee->id }}" class="form-control" hidden>
                             <div class="form-group">
-                                <label for="">Name*</label>
+                                <label for="">Experience *</label>
                                 <br>
                                 <input type="text" name="job_title" class="form-control" required>
                             </div>

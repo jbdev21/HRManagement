@@ -43,8 +43,6 @@
                     </div>
                 </div>
                 <div class="text-center mb-3">
-
-
                     <u>{{ $employee->permanent_date->format('F d, Y') }} </u>
                     <br>
                     (Date of Appointment)

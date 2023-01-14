@@ -255,7 +255,7 @@ class EmployeeController extends Controller
             $clonedMonth = clone $dateFrom;
             $currentVacationLeave += (float) config("app.credits_per_month");
             $currentSickLeave += (float) config("app.credits_per_month");
-            $newMonth = $clonedMonth->addMonths($i);
+            $newMonth = $clonedMonth->subMonths($i);
             $leaves = Leave::query()
                         ->where("employee_id", $employee->id)
                         ->where("recommendation", "approval")
