@@ -16,7 +16,7 @@
                         <h5>Experience</h5>
                             <input type="number" name="employee_id" value="{{ $applicant->id }}" class="form-control" hidden>
                             <div class="form-group">
-                                <label for="">Name*</label>
+                                <label for="">Experience *</label>
                                 <br>
                                 <input type="text" name="job_title" class="form-control" required>
                             </div>
@@ -71,7 +71,7 @@
                     <table class="table  table-responsive mt-2">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Experience</th>
                                 <th>Note/Remarks</th>
                                 <th>Date Start</th>
                                 <th>Date End</th>
