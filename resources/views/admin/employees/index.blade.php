@@ -71,14 +71,14 @@
                                         <td>{{ ucfirst($employee->department->name) }} </td>
                                         <td>{{ ucfirst($employee->designation) }} </td>
                                         <td>{{ $employee->work_experiences_sum_points }} </td>
-                                        <td class="text-end">
+                                        <td class="text-end d-grid">
                                             <a href="{{ route('employees.show', $employee->id) }}"
-                                                class="btn btn-success btn-sm text-white"> Show</a>
+                                                class="btn btn-success btn-sm text-white mb-1"> Show</a>
                                             <a href="{{ route('employees.edit', $employee->id) }}"
-                                                class="btn btn-info btn-sm text-white"> Edit</a>
+                                                class="btn btn-info btn-sm text-white mb-1"> Edit</a>
                                             <a href="#"
                                                 onclick="if(confirm('Are you sure to delete employee?')){ document.getElementById('form-{{ $employee->id }}').submit() }"
-                                                class="btn btn-danger btn-sm text-white"> Delete</a>
+                                                class="btn btn-danger btn-sm text-white mb-1"> Delete</a>
                                             <form method="POST" id="form-{{ $employee->id }}"
                                                 action="{{ route('employees.destroy', $employee->id) }}">@csrf
                                                 @method('DELETE')</form>
