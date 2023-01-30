@@ -73,10 +73,20 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">Designation/Position</label>
                                     <input type="text" name="designation" value="{{ $applicant->designation }}"
                                         placeholder="middle name.." class="form-control" required>
+                                </div> --}}
+
+                                <div class="form-group">
+                                    <label for="">Designation/Position</label>
+                                    <select name="designation" id="" class="form-select">
+                                        <option value="">- Select Position -</option>
+                                        @foreach($positions as $position)
+                                        <option @if($applicant->designation == $position->name) selected @endif  value="{{ ucfirst($position->name) }}">{{ ucfirst($position->name) }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Working Status</label>

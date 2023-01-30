@@ -18,7 +18,8 @@
                             <label for="">Type</label>
                             <select name="type" id="" class="form-control">
                                 <option value="leave" @if(Request::get("type") == "leave") selected @endif >Leave</option>
-                                <option value="document	" @if(Request::get("type") == "document") selected @endif>Document</option>
+                                <option value="document" @if(Request::get("type") == "document") selected @endif>Document</option>
+                                <option value="position" @if(Request::get("type") == "position") selected @endif>Position</option>
                             </select>
                         </div>
                         <button class="btn btn-lg btn-primary">Submit</button>
@@ -33,6 +34,7 @@
                                     <option value=""> - all types -</option>
                                     <option value="leave" @if(Request::get("type") == "leave") selected @endif >Leave</option>
                                     <option value="document	" @if(Request::get("type") == "document") selected @endif>Document</option>
+                                    <option value="position	" @if(Request::get("type") == "position") selected @endif>Position</option>
                                 </select>
                             </div>
                         </div>

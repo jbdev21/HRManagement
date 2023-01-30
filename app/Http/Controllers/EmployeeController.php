@@ -255,7 +255,7 @@ class EmployeeController extends Controller
             $clonedMonth = clone $dateFrom;
             $currentVacationLeave += (float) config("app.credits_per_month");
             $currentSickLeave += (float) config("app.credits_per_month");
-            $newMonth = $clonedMonth->subMonths($i);
+            $newMonth = $clonedMonth->addMonths($i);
             $leaves = Leave::query()
                         ->where("employee_id", $employee->id)
                         ->where("recommendation", "approval")
@@ -265,7 +265,7 @@ class EmployeeController extends Controller
                         });
 
             foreach($leaves->get() as $leave){
-         
+    
                 $currentVacationLeave -= $leave->points_deduction_vacation;
                 $currentSickLeave -= $leave->points_deduction_sick;
                 $data->push([

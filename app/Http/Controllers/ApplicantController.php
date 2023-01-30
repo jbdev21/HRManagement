@@ -46,8 +46,8 @@ class ApplicantController extends Controller
     {
         //get department
         $departments = Department::all();
-
-        return view('admin.applicant.create', compact('departments'));
+        $positions = Category::where("type", 'position')->get();
+        return view('admin.applicant.create', compact('departments', 'positions'));
     }
 
     /**
@@ -183,7 +183,8 @@ class ApplicantController extends Controller
         //get department
         $applicant = Employee::find($applicant);
         $departments = Department::all();
-        return view('admin.applicant.edit', compact('applicant', 'departments'));
+        $positions = Category::where("type", 'position')->get();
+        return view('admin.applicant.edit', compact('applicant', 'departments', 'positions'));
     }
 
     /**

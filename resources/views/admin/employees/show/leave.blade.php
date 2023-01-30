@@ -10,7 +10,9 @@
             @include('admin.employees.show.tabs')
             <div class="py-3">
                 @if($employee->working_status == "permanent")
+                    @if($employee->currentLeaves() > 0 && $employee->currentLeaves('sick') > 0)
                     <a href="{{ route('leave.create', ['employee' => $employee->id]) }}" class="btn btn-primary mb-3 mt-3">Add Leave</a>
+                    @endif
                     <a href="{{ route('employees.leave-card', $employee->id) }}" target="_blank" class="btn btn-primary mb-3 mt-3">Leave Card</a>
                     <div>
                         Current Credits: <b>{{ $employee->currentLeaves() }}</b> vacation / <b>{{ $employee->currentLeaves("sick") }}</b> sick

@@ -47,6 +47,9 @@
                     <br>
                     (Date of Appointment)
                 </div>
+                <div class="mb-3">
+                    Current Credits: <b>{{ $employee->currentLeaves() }}</b> vacation / <b>{{ $employee->currentLeaves("sick") }}</b> sick
+                </div>
                 <table class="table-bordered table-sm table">
                     <tr>
                         <th rowspan="2">Date</th>

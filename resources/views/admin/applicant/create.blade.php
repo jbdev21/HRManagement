@@ -57,19 +57,19 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="">Applied Position</label>
                                 <input type="text" name="designation" placeholder="position"  class="form-control" required>
-                            </div>
-                            {{-- <div class="form-group">
-                                <label for="">Working Status</label>
-                                <select name="working_status" id="" class="form-select">
-                                    <option value="permanent">Permanent</option>
-                                    <option value="contractual">Contractual</option>
-                                    <option value="substitute">Substitute</option>
-                                    <option value="temporary">Temporary</option>
-                                </select>
                             </div> --}}
+                            <div class="form-group">
+                                <label for="">Applied Position</label>
+                                <select name="designation" id="" class="form-select">
+                                    <option value="">- Select Position -</option>
+                                    @foreach($positions as $position)
+                                    <option value="{{ ucfirst($position->name) }}">{{ ucfirst($position->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             {{-- <div class="form-group">
                                 <label for="">Appointment Date</label>
                                 <input type="date" name="permanent_date" class="form-control">

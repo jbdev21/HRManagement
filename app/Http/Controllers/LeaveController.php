@@ -15,7 +15,7 @@ class LeaveController extends Controller
     {
         //get all employees leave
 
-        $leaves = Leave::orderBy('created_at', 'DESC')->has("employee")->paginate(25);
+        $leaves = Leave::latest()->has("employee")->paginate(25);
 
         return view('admin.leaves.index', compact('leaves'));
     }

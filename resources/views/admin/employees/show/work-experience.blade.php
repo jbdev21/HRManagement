@@ -71,7 +71,7 @@
                     <table class="table  table-responsive mt-2">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Experience</th>
                                 <th>Note/Remarks</th>
                                 <th>Date Start</th>
                                 <th>Date End</th>
